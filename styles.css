@@ -13,7 +13,6 @@
   font-style: normal;
 }
 
-
 /* Reset */
 * {
   margin: 0;
@@ -53,13 +52,21 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   transition: transform 0.2s ease, color 0.3s ease;
   max-height: 90px;
-
 }
 
 .navbar .logo:hover {
   color: #00c9a7; /* highlight color */
   transform: scale(1.05);
 }
+
+/* ensure the logo image is constrained */
+.navbar .logo img {
+  max-height: 90px;
+  width: auto;
+  height: auto;
+  display: block;
+}
+
 .nav-links {
   list-style: none;
   display: flex;
@@ -73,43 +80,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-links a:hover {
-  color: #00c9a7;
-}
-
-/* --- Hamburger (desktop hidden) --- */
-.hamburger {
-  display: none; /* shown only on mobile */
-  background: none;
-  border: 0;
-  width: 40px;
-  height: 32px;
-  padding: 0;
-  position: relative;
-  cursor: pointer;
-}
-
-.hamburger span {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: #fff;
-  border-radius: 2px;
-  transition: transform 0.3s ease, top 0.3s ease, opacity 0.2s ease;
-}
-
-.hamburger span:nth-child(1) { top: 7px; }
-.hamburger span:nth-child(2) { top: 15px; }
-.hamburger span:nth-child(3) { top: 23px; }
-
-.hamburger.is-active span:nth-child(1) {
-  top: 15px; transform: rotate(45deg);
-}
-.hamburger.is-active span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger.is-active span:nth-child(3) {
-  top: 15px; transform: rotate(-45deg);
+  color: #2b2f77;
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+  padding: 0.1rem 0.25rem;
 }
 
 /* Hero Banner */
@@ -175,7 +149,7 @@ main {
   margin-bottom: 1rem;
 }
 
-/*Venue*/
+/* Venue */
 .venue-image {
   display: block;
   max-width: 100%;
@@ -190,7 +164,7 @@ footer {
   background: #222;
   color: #ddd;
   padding: 2rem;
-  text-align: center; /* default; we override in columns */
+  text-align: center; /* default; columns override as needed */
 }
 
 .footer-content {
@@ -200,7 +174,7 @@ footer {
   align-items: center;               /* vertical align */
   flex-wrap: nowrap;                 /* one row on desktop */
   gap: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 footer h3 {
@@ -213,31 +187,27 @@ footer ul {
   margin: 0;
 }
 
-footer a {
-  color: #ddd;
-  text-decoration: none;
-}
-footer a:hover {
-  color: #00c9a7;
-}
+footer a { color: #ddd; text-decoration: none; }
+footer a:hover { color: #00c9a7; }
 
-/* LEFT: sitemap */
+/* Left: sitemap */
 .sitemap {
   flex: 1 1 0;
   text-align: left;
-  margin-left: 1rem;                 /* gentle space from left edge */
+  margin-left: 1rem; /* soft edge spacing */
 }
 
-/* CENTER: company disclaimer + stamp + copyright */
+/* Center: company */
 .footer-company {
   flex: 1 1 0;
   text-align: center;
-  color: #ddd;
 }
+
 .footer-company p {
   margin-bottom: 0.5rem;
   font-size: 1rem;
 }
+
 .company-stamp {
   max-width: 120px;
   height: auto;
@@ -245,46 +215,82 @@ footer a:hover {
   display: block;
   opacity: 0.9;
 }
+
 .copyright {
   margin-top: 0.5rem;
   font-size: 0.9rem;
   display: block;
 }
 
-/* RIGHT: social header + inline icons aligned to the right */
+/* Right: socials */
 .social {
   flex: 1 1 0;
-  text-align: right;                 /* FIX: must be 'right' not 'centre' */
-  margin-right: 1rem;                /* gentle space from right edge */
-  display: flex;                     /* allow header + list to align together */
+  text-align: right;
+  margin-right: 1rem; /* soft edge spacing */
+  display: flex;
   flex-direction: column;
-  align-items: flex-end;             /* align both header and icons to right */
+  align-items: flex-end; /* header + icons align to right edge */
 }
+
 .social h3 {
   margin: 0 0 0.5rem 0;
-  text-align: center;                /* visually centered over the icon row */
-  width: fit-content;                /* shrink to content width */
+  text-align: center;    /* visually centered over icon row */
+  width: fit-content;
 }
+
 .social-list {
-  display: inline-flex;              /* icons in one line */
+  display: inline-flex;  /* icons inline */
   gap: 1rem;
-  justify-content: flex-end;         /* align icons to the right edge */
+  justify-content: flex-end;
   padding: 0;
   margin: 0;
   list-style: none;
 }
+
 .social-list li {
   display: inline-block;
 }
+
 .social-icon {
   width: 50px;
   height: auto;
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 .social-icon:hover {
   transform: scale(1.1);
 }
+
+/* --- Hamburger base (hidden on desktop) --- */
+.hamburger {
+  display: none;
+  background: none;
+  border: 0;
+  width: 40px;
+  height: 32px;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, top 0.3s ease, opacity 0.2s ease;
+}
+
+.hamburger span:nth-child(1) { top: 7px; }
+.hamburger span:nth-child(2) { top: 15px; }
+.hamburger span:nth-child(3) { top: 23px; }
+
+.hamburger.is-active span:nth-child(1) { top: 15px; transform: rotate(45deg); }
+.hamburger.is-active span:nth-child(2) { opacity: 0; }
+.hamburger.is-active span:nth-child(3) { top: 15px; transform: rotate(-45deg); }
 
 /* --- Mobile nav panel --- */
 @media (max-width: 768px) {
@@ -294,17 +300,14 @@ footer a:hover {
     padding: 0.75rem 1rem; /* tighter padding on small screens */
   }
 
-  .navbar .logo{
-    max-height: 80px;
-  }
+  .navbar .logo { max-height: 80px; }
+  .navbar .logo img { max-height: 80px; }
 
-  /* Show the burger, keep logo */
   .hamburger {
     display: block;
     margin-left: auto; /* push burger to the right of the logo */
   }
 
-  /* Turn nav links into a dropdown panel */
   .nav-links {
     display: none;                /* hidden by default on mobile */
     position: absolute;
@@ -318,9 +321,7 @@ footer a:hover {
     z-index: 1000;
   }
 
-  .nav-links.open {
-    display: flex;                /* show when toggled */
-  }
+  .nav-links.open { display: flex; }
 
   .nav-links a {
     display: block;
@@ -329,13 +330,10 @@ footer a:hover {
     color: #fff;
   }
 
-  .hero h1{
-    line-height: 4rem;
-  }
+  .hero h1 { line-height: 4rem; }
 }
 
-
-/* --- Mobile fix: iPhone SE and small screens --- */
+/* --- Mobile footer stacking --- */
 @media (max-width: 480px) {
   .footer-content {
     flex-direction: column;          /* stack vertically */
@@ -354,24 +352,14 @@ footer a:hover {
     text-align: center;              /* center all sections on mobile */
   }
 
-  .social {
-    align-items: center;             /* center header + icons together */
-  }
-  .social-list {
-    justify-content: center;         /* center icons under header */
-  }
-  .social-icon {
-    width: 40px;                     /* slightly smaller for small screens */
-  }
+  .social { align-items: center; }
+  .social-list { justify-content: center; }
+  .social-icon { width: 40px; }
 }
 
-  @media (max-width: 344px) {
-    
-    .hero h1{
-    line-height: 4rem;
-    }
-
-    .navbar .logo{
-    max-height: 70px;
-  }
+/* --- Very small screens --- */
+@media (max-width: 344px) {
+  .hero h1 { line-height: 4rem; }
+  .navbar .logo { max-height: 70px; }
+  .navbar .logo img { max-height: 70px; }
 }
