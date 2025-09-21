@@ -16,4 +16,5 @@ document.addEventListener("DOMContentLoaded", () => {
     const expanded = burger.classList.contains("is-active");
     burger.setAttribute("aria-expanded", expanded);
   });
+  
 });
