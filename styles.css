@@ -265,23 +265,16 @@ footer a:hover { color: #00c9a7; }
 /* --- Hamburger base (hidden on desktop) --- */
 .hamburger {
   display: none;
-  background: none;
+  background: transparent;
   border: 0;
-  width: 40px;
-  height: 32px;
-  padding: 0;
-  position: relative;
-  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  font-size: 0;   /* avoid stray inline pixels */
+  line-height: 0; /* avoid stray inline pixels */
 }
-
 .hamburger span {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: #fff;
-  border-radius: 2px;
-  transition: transform 0.3s ease, top 0.3s ease, opacity 0.2s ease;
+  display: none;  /* hide inner bars too */
 }
 
 .hamburger span:nth-child(1) { top: 7px; }
@@ -303,10 +296,8 @@ footer a:hover { color: #00c9a7; }
   .navbar .logo { max-height: 80px; }
   .navbar .logo img { max-height: 80px; }
 
-  .hamburger {
-    display: block;
-    margin-left: auto; /* push burger to the right of the logo */
-  }
+  .hamburger { display: block; }
+  .hamburger span { display: block; }
 
   .nav-links {
     display: none;                /* hidden by default on mobile */
