@@ -10,15 +10,23 @@
 
   <!-- Navbar -->
   <header>
-    <nav class="navbar">
-      <div class="logo"><img src="images/logo_full.png" alt="PlayThisIGF" class="logo"></div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#program">Program</a></li>
-        <li><a href="#venue">Venue</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+   <nav class="navbar">
+  <div class="logo">
+    <img src="images/logo_full.png" alt="PlayThisIGF" class="logo">
+  </div>
+
+  <!-- NEW: mobile hamburger button -->
+  <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul id="primary-nav" class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
   </header>
 
   <!-- Hero Banner -->
@@ -85,6 +93,6 @@
     </div>
     
   </footer>
-  <script src="script.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>

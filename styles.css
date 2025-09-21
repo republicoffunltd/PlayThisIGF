@@ -76,6 +76,42 @@ h1, h2, h3, h4, h5, h6 {
   color: #00c9a7;
 }
 
+/* --- Hamburger (desktop hidden) --- */
+.hamburger {
+  display: none; /* shown only on mobile */
+  background: none;
+  border: 0;
+  width: 40px;
+  height: 32px;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, top 0.3s ease, opacity 0.2s ease;
+}
+
+.hamburger span:nth-child(1) { top: 7px; }
+.hamburger span:nth-child(2) { top: 15px; }
+.hamburger span:nth-child(3) { top: 23px; }
+
+.hamburger.is-active span:nth-child(1) {
+  top: 15px; transform: rotate(45deg);
+}
+.hamburger.is-active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.is-active span:nth-child(3) {
+  top: 15px; transform: rotate(-45deg);
+}
+
 /* Hero Banner */
 .hero {
   background: url('images/banner.jpg') no-repeat center center/cover;
@@ -154,17 +190,17 @@ footer {
   background: #222;
   color: #ddd;
   padding: 2rem;
-  text-align: center; /* default; we override per column */
+  text-align: center; /* default; we override in columns */
 }
 
 .footer-content {
   display: flex;
   width: 100%;
-  justify-content: space-between;  /* left / center / right */
-  align-items: center;              /* vertically align */
-  flex-wrap: nowrap;                /* keep one row */
+  justify-content: space-between;   /* left / center / right */
+  align-items: center;               /* vertical align */
+  flex-wrap: nowrap;                 /* one row on desktop */
+  gap: 2rem;
   margin-bottom: 1rem;
-  gap: 2rem;                        /* breathing room between columns */
 }
 
 footer h3 {
@@ -181,7 +217,6 @@ footer a {
   color: #ddd;
   text-decoration: none;
 }
-
 footer a:hover {
   color: #00c9a7;
 }
@@ -190,21 +225,19 @@ footer a:hover {
 .sitemap {
   flex: 1 1 0;
   text-align: left;
-  margin-left: 8rem; /* add breathing space from left edge */
+  margin-left: 1rem;                 /* gentle space from left edge */
 }
 
 /* CENTER: company disclaimer + stamp + copyright */
 .footer-company {
   flex: 1 1 0;
-  text-align: center;   /* keep strictly centered */
+  text-align: center;
   color: #ddd;
 }
-
 .footer-company p {
   margin-bottom: 0.5rem;
   font-size: 1rem;
 }
-
 .company-stamp {
   max-width: 120px;
   height: auto;
@@ -212,7 +245,6 @@ footer a:hover {
   display: block;
   opacity: 0.9;
 }
-
 .copyright {
   margin-top: 0.5rem;
   font-size: 0.9rem;
@@ -222,34 +254,124 @@ footer a:hover {
 /* RIGHT: social header + inline icons aligned to the right */
 .social {
   flex: 1 1 0;
-  text-align: centre;
-  margin-right: 8rem; /* push away from edge */
+  text-align: right;                 /* FIX: must be 'right' not 'centre' */
+  margin-right: 1rem;                /* gentle space from right edge */
+  display: flex;                     /* allow header + list to align together */
+  flex-direction: column;
+  align-items: flex-end;             /* align both header and icons to right */
 }
-
 .social h3 {
-  text-align: center; /* center header above icons */
+  margin: 0 0 0.5rem 0;
+  text-align: center;                /* visually centered over the icon row */
+  width: fit-content;                /* shrink to content width */
 }
-
 .social-list {
-  display: inline-flex;      /* icons in one line */
+  display: inline-flex;              /* icons in one line */
   gap: 1rem;
-  justify-content: flex-end; /* align icons to the right */
+  justify-content: flex-end;         /* align icons to the right edge */
   padding: 0;
-  margin: 0.5rem 0 0;
+  margin: 0;
   list-style: none;
 }
-
 .social-list li {
   display: inline-block;
 }
-
 .social-icon {
   width: 50px;
   height: auto;
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
-
 .social-icon:hover {
   transform: scale(1.1);
+}
+
+/* --- Mobile nav panel --- */
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem; /* tighter padding on small screens */
+  }
+
+  .navbar .logo{
+    max-height: 80px;
+  }
+
+  /* Show the burger, keep logo */
+  .hamburger {
+    display: block;
+    margin-left: auto; /* push burger to the right of the logo */
+  }
+
+  /* Turn nav links into a dropdown panel */
+  .nav-links {
+    display: none;                /* hidden by default on mobile */
+    position: absolute;
+    top: 100%;                    /* right below the navbar */
+    left: 0;
+    right: 0;
+    background: #00c9a7;          /* same as navbar for a seamless look */
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    gap: 0.25rem;
+    z-index: 1000;
+  }
+
+  .nav-links.open {
+    display: flex;                /* show when toggled */
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.5rem 0.25rem;
+    font-size: 1rem;
+    color: #fff;
+  }
+
+  .hero h1{
+    line-height: 4rem;
+  }
+}
+
+
+/* --- Mobile fix: iPhone SE and small screens --- */
+@media (max-width: 480px) {
+  .footer-content {
+    flex-direction: column;          /* stack vertically */
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  .sitemap,
+  .footer-company,
+  .social {
+    flex: none;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;              /* center all sections on mobile */
+  }
+
+  .social {
+    align-items: center;             /* center header + icons together */
+  }
+  .social-list {
+    justify-content: center;         /* center icons under header */
+  }
+  .social-icon {
+    width: 40px;                     /* slightly smaller for small screens */
+  }
+
+  @media (max-width: 344px) {
+    
+    .hero h1{
+    line-height: 4rem;
+    }
+
+    .navbar .logo{
+    max-height: 70px;
+  }
+
 }
