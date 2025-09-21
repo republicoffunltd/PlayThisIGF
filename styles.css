@@ -264,40 +264,75 @@ footer a:hover { color: #00c9a7; }
 
 /* --- Hamburger base (hidden on desktop) --- */
 .hamburger {
-  display: none;
-  background: transparent;
-  border: 0;
-  appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-  font-size: 0;   /* avoid stray inline pixels */
-  line-height: 0; /* avoid stray inline pixels */
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+
+  font-size: 0 !important;
+  line-height: 0 !important;
+  pointer-events: none !important;
 }
+
 .hamburger span {
-  display: none;  /* hide inner bars too */
+  display: none !important;        /* hide the bars too */
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
-
-.hamburger span:nth-child(1) { top: 7px; }
-.hamburger span:nth-child(2) { top: 15px; }
-.hamburger span:nth-child(3) { top: 23px; }
-
-.hamburger.is-active span:nth-child(1) { top: 15px; transform: rotate(45deg); }
-.hamburger.is-active span:nth-child(2) { opacity: 0; }
-.hamburger.is-active span:nth-child(3) { top: 15px; transform: rotate(-45deg); }
 
 /* --- Mobile nav panel --- */
 @media (max-width: 768px) {
   .navbar {
     position: relative;
     flex-wrap: wrap;
-    padding: 0.75rem 1rem; /* tighter padding on small screens */
+    padding: 0.75rem 1rem;
   }
 
-  .navbar .logo { max-height: 80px; }
-  .navbar .logo img { max-height: 80px; }
+  .hamburger {
+    position: static !important;    /* bring it back into flow */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 40px !important;
+    height: 32px !important;
+    pointer-events: auto !important;
+    margin-left: auto;
+    overflow: visible !important;
+  }
 
-  .hamburger { display: block; }
-  .hamburger span { display: block; }
+  .hamburger span {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s ease, top 0.3s ease, opacity 0.2s ease;
+  }
+
+  .hamburger span:nth-child(1) { top: 7px; }
+  .hamburger span:nth-child(2) { top: 15px; }
+  .hamburger span:nth-child(3) { top: 23px; }
+
+  .hamburger.is-active span:nth-child(1) { top: 15px; transform: rotate(45deg); }
+  .hamburger.is-active span:nth-child(2) { opacity: 0; }
+  .hamburger.is-active span:nth-child(3) { top: 15px; transform: rotate(-45deg); }
 
   .nav-links {
     display: none;                /* hidden by default on mobile */
