@@ -36,11 +36,13 @@ h1, h2, h3, h4, h5, h6 {
 /* Navbar */
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* logo left / hamburger right */
   align-items: center;
   background: #00c9a7;
-  padding: 1rem 2rem;
+  padding: 0.75rem 1.25rem;
   color: #fff;
+  position: relative;
+  z-index: 5;
 }
 
 .navbar .logo {
@@ -61,12 +63,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ensure the logo image is constrained */
 .navbar .logo img {
-  max-height: 90px;
+  max-height: 80px;
   width: auto;
   height: auto;
   display: block;
 }
 
+/* Desktop nav links */
 .nav-links {
   list-style: none;
   display: flex;
@@ -262,85 +265,69 @@ footer a:hover { color: #00c9a7; }
   transform: scale(1.1);
 }
 
-/* --- Hamburger base (hidden on desktop) --- */
+/* -----------------------------
+   Cute Hamburger (default: hidden on desktop)
+   ----------------------------- */
 .hamburger {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  width: 0 !important;
-  height: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  position: absolute !important;
-  left: -9999px !important;
+  display: none;              /* stays hidden on desktop */
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 44px;
+  height: 36px;
+  position: relative;
+  z-index: 2000;
+  -webkit-tap-highlight-color: transparent;
 
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-
-  font-size: 0 !important;
-  line-height: 0 !important;
-  pointer-events: none !important;
+  /* stack the bars vertically */
+  display: none;              /* default hidden; will show on mobile below */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;                   /* spacing between bars */
 }
 
 .hamburger span {
-  display: none !important;        /* hide the bars too */
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
+  display: block;
+  width: 30px;
+  height: 4px;
+  background: #fefefe;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  margin: 0;                  /* no margins; gap handles spacing */
+  transition: transform 0.3s ease, opacity 0.2s ease;
 }
 
-/* --- Mobile nav panel --- */
+/* active (X) */
+.hamburger.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.is-active span:nth-child(2) { opacity: 0; }
+.hamburger.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+
+/* -----------------------------
+   Mobile nav panel
+   ----------------------------- */
+
 @media (max-width: 768px) {
   .navbar {
-    position: relative;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     padding: 0.75rem 1rem;
   }
 
   .hamburger {
-    position: static !important;    /* bring it back into flow */
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 40px !important;
-    height: 32px !important;
-    pointer-events: auto !important;
-    margin-left: auto;
-    overflow: visible !important;
+    display: flex;            /* show on mobile */
+    align-items: center;
+    justify-content: center;
   }
-
-  .hamburger span {
-    display: block !important;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: #fff;
-    border-radius: 2px;
-    transition: transform 0.3s ease, top 0.3s ease, opacity 0.2s ease;
-  }
-
-  .hamburger span:nth-child(1) { top: 7px; }
-  .hamburger span:nth-child(2) { top: 15px; }
-  .hamburger span:nth-child(3) { top: 23px; }
-
-  .hamburger.is-active span:nth-child(1) { top: 15px; transform: rotate(45deg); }
-  .hamburger.is-active span:nth-child(2) { opacity: 0; }
-  .hamburger.is-active span:nth-child(3) { top: 15px; transform: rotate(-45deg); }
 
   .nav-links {
-    display: none;                /* hidden by default on mobile */
+    display: none;            /* hidden by default on mobile */
     position: absolute;
-    top: 100%;                    /* right below the navbar */
+    top: 100%;                /* below the navbar */
     left: 0;
     right: 0;
-    background: #00c9a7;          /* same as navbar for a seamless look */
+    background: #00c9a7;      /* match navbar */
     padding: 0.75rem 1rem;
     flex-direction: column;
     gap: 0.25rem;
@@ -354,6 +341,12 @@ footer a:hover { color: #00c9a7; }
     padding: 0.5rem 0.25rem;
     font-size: 1rem;
     color: #fff;
+  }
+
+  .hero {
+    background-image: url('images/banner_mobile.jpg') !important;
+
+    height: 80vh; /* ou 80vh se preferir menos alto */
   }
 
   .hero h1 { line-height: 4rem; }
