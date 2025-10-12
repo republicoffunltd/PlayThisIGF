@@ -20,17 +20,29 @@
   box-sizing: border-box;
 }
 
+:root { --nav-height: 90px; }      /* adjust if your navbar height changes */
+
 body {
   font-family: 'D-DINCondensed', Arial, sans-serif;
   line-height: 1.6;
   background: #f9f9f9;
   color: #2b2f77; /* body text color */
   font-size: 1.4rem;
+  padding-top: 90px;  /* ajuste conforme a altura real do seu navbar */
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Porkys', sans-serif;
   color: #00c9a7; /* header color */
+}
+
+/* ---- Container padrão ---- */
+.container {
+  max-width: 1400px;    /* largura máxima do conteúdo */
+  margin: 0 auto;       /* centraliza horizontalmente */
+  padding: 0 1.5rem;    /* respiro nas laterais */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Navbar */
@@ -41,8 +53,23 @@ h1, h2, h3, h4, h5, h6 {
   background: #00c9a7;
   padding: 0.75rem 1.25rem;
   color: #fff;
-  position: relative;
-  z-index: 5;
+  position: fixed;        /* fixa no topo */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;          /* acima de tudo */
+}
+
+/* mantém o container centralizado dentro do navbar fixo */
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .navbar .logo {
@@ -69,11 +96,23 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;               /* space between menu and button */
+  margin-left: auto;       /* pushes this group to the far right */
+}
+
+
 /* Desktop nav links */
 .nav-links {
-  list-style: none;
+  list-style: none;       /* remove os bullets */
+  margin: 0;
+  padding: 0;
   display: flex;
   gap: 1.5rem;
+  align-items: center;
+  font-size: 1.6rem;
 }
 
 .nav-links a {
@@ -88,6 +127,26 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
   padding: 0.1rem 0.25rem;
 }
+
+.mobile-cta-bar {
+  display: none;
+  width: 100%;
+  text-align: center;
+  font-weight: 800;
+  font-family: porkys;
+  padding: 0.9rem 1rem;
+  background: #2b2f77;
+  color: #fff;
+  position: sticky;
+  top: var(--nav-height);          /* stick just below navbar */
+  z-index: 950;                    /* below modal (9999), above content */
+  text-decoration: none;
+  box-shadow: none;
+  outline: none;
+}
+.mobile-cta-bar:hover { background: #e474ad; }
+.mobile-cta-bar.is-visible { display: block; }
+
 
 /* Hero Banner */
 .hero {
@@ -113,7 +172,7 @@ hero h1 {
   font-size: 12rem;
   /* white fill with blue outline (#2e3192) */
   color: #fff;
-  -webkit-text-stroke: 3px #2e3192;
+  -webkit-text-stroke: 8px #2e3192;
   text-shadow:
     1px 0   #2e3192, -1px 0   #2e3192,
     0   1px #2e3192,  0  -1px #2e3192; /* fallback for non-WebKit */
@@ -123,7 +182,7 @@ hero h1 {
   font-size: 12rem;
   /* teal fill (#00a79d) with same blue outline */
   color: #00a79d;
-  -webkit-text-stroke: 3px #2e3192;
+  -webkit-text-stroke: 8px #2e3192;
   text-shadow:
     1px 0   #2e3192, -1px 0   #2e3192,
     0   1px #2e3192,  0  -1px #2e3192;
@@ -176,6 +235,22 @@ hero h1 {
 .btn:hover {
   background: #00c9a7;
   color: #2e3192;
+}
+
+/* Smaller CTA button */
+.btn-small {
+  padding: 0.5rem 0.9rem;
+  font-size: 2rem;
+  border-radius: 6px;
+  line-height: 1;
+  box-shadow: none;
+  outline: none;
+}
+
+/* Hover color for navbar CTA: pink from What to Expect */
+.nav-cta:hover,
+#primary-nav .nav-cta-mobile .btn:hover {
+  background: #e474ad;
 }
 
 /* ===== Tickets Modal ===== */
@@ -316,15 +391,6 @@ main {
   font-weight: 700;
   font-size: 1.7rem;
   color: #2b2f77;
-}
-
-/* responsive layout */
-@media (max-width: 900px) {
-  .expect-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 520px) {
-  .expect-grid { grid-template-columns: 1fr; }
-  .expect-card { height: 140px; }
 }
 
 /* Venue */
@@ -501,6 +567,10 @@ footer a:hover { color: #e474ad; }
    Mobile nav panel
    ----------------------------- */
 
+@media (max-width: 900px) {
+  .expect-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 768px) {
   .navbar {
     flex-wrap: nowrap;
@@ -531,8 +601,16 @@ footer a:hover { color: #e474ad; }
   .nav-links a {
     display: block;
     padding: 0.5rem 0.25rem;
-    font-size: 1rem;
+    font-size: 1.4rem;
     color: #fff;
+  }
+
+  .nav-cta {
+    display: none !important;
+  }
+
+  .mobile-cta-bar {
+    top: 128px; /* stick just below the fixed navbar */
   }
 
   .hero {
@@ -543,11 +621,28 @@ footer a:hover { color: #e474ad; }
 
   .hero h1 { line-height: 4rem; }
 
-  .hero .word-play,
-  .hero .word-this,
-  .hero .word-indie {
-    -webkit-text-stroke: 2px currentColor; /* keeps proportions */
+
+  .hero .word-play {
+    font-size: 6rem;
+    -webkit-text-stroke: 4px #2e3192;
   }
+
+  .hero .word-this {
+    font-size: 6rem;
+    -webkit-text-stroke: 4px #2e3192;
+  }
+
+  .hero .word-indie {
+   font-size: 3rem;
+   -webkit-text-stroke: 1px #000;
+   line-height: 1rem !important; 
+  }
+
+  .expect-grid { grid-template-columns: 1fr; }
+  .expect-card { 
+    height: 175px;
+  }
+
 }
 
 /* --- Mobile footer stacking --- */
