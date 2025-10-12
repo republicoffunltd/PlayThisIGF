@@ -162,17 +162,21 @@ main {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.venue-btn {
-  display: block;
-  width: fit-content;
+/* CTA do venue */
+#venue .venue-btn,
+.article #venue .venue-btn { /* redundância inocente pra aumentar especificidade */
+  display: inline-block;
   margin: 1rem auto 0;
+  padding: 0.9rem 1.6rem;
+  border-radius: 10px;
+  background-color: #2b2f77; /* override do verde */
   text-align: center;
-  background-color: #2b2f77;
 }
 
-.venue-btn:hover {
-  background-color: #00c9a7;
-}
+/* Centralizar sem depender de margin:auto do bloco pai */
+#venue { text-align: center; }
+#venue .venue-image { margin-left: auto; margin-right: auto; display: block; }
+
 
 /* Footer */
 footer {
