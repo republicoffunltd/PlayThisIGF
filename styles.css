@@ -162,6 +162,18 @@ main {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+.venue-btn {
+  display: block;
+  width: fit-content;
+  margin: 1rem auto 0;
+  text-align: center;
+  background-color: #2b2f77;
+}
+
+.venue-btn:hover {
+  background-color: #00c9a7;
+}
+
 /* Footer */
 footer {
   background: #222;
