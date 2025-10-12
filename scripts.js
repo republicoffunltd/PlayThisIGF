@@ -126,39 +126,94 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     MOBILE CTA BAR (APARECE QUANDO O HERO SAI)
-     ========================= */
+   MOBILE CTA BAR (slides in/out somente pelo HERO)
+   ========================= */
   const hero = document.querySelector(".hero");
   const mobileCta = document.getElementById("mobile-cta");
   const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
-  if (hero && mobileCta && 'IntersectionObserver' in window) {
-  const io = new IntersectionObserver(
-    ([entry]) => {
-      if (!isMobile()) {
-        mobileCta.classList.remove('is-visible');
-        return;
+  if (hero && mobileCta) {
+    // mesma altura do CSS (fallback 90)
+    const NAV_HEIGHT =
+      parseInt(getComputedStyle(document.documentElement)
+        .getPropertyValue("--nav-height")) || 90;
+
+    let heroVisible = true;
+
+    const showBar = () => {
+      if (!isMobile()) return;
+      if (!mobileCta.classList.contains("is-visible")) {
+        mobileCta.classList.remove("is-hiding");
+        mobileCta.classList.add("is-visible");
       }
-      // Hide while any noticeable part of hero is on-screen; show otherwise
-      if (entry.isIntersecting && entry.intersectionRatio > 0.01) {
-        mobileCta.classList.remove('is-visible');
+    };
+
+    const hideBar = () => {
+      if (mobileCta.classList.contains("is-visible")) {
+        mobileCta.classList.remove("is-visible");
+        mobileCta.classList.add("is-hiding");
+        mobileCta.addEventListener("animationend", () => {
+          mobileCta.classList.remove("is-hiding");
+        }, { once: true });
+      }
+    };
+
+    const updateBar = () => {
+      if (!isMobile()) { hideBar(); return; }
+      if (!heroVisible) { showBar(); } else { hideBar(); }
+    };
+
+    // Observa o HERO: considera "fora de vista" assim que passar do navbar
+    if ("IntersectionObserver" in window) {
+      const heroIO = new IntersectionObserver(
+        ([entry]) => {
+          heroVisible = entry.isIntersecting && entry.intersectionRatio > 0.01;
+          updateBar();
+        },
+        {
+          threshold: [0, 0.01, 0.1, 0.9, 1],
+          rootMargin: `-${NAV_HEIGHT}px 0px 0px 0px`
+        }
+      );
+      heroIO.observe(hero);
+    } else {
+      // Fallback simples
+      const fallback = () => {
+        const heroRect = hero.getBoundingClientRect();
+        heroVisible = heroRect.bottom > NAV_HEIGHT;
+        updateBar();
+      };
+      document.addEventListener("scroll", fallback, { passive: true });
+      window.addEventListener("resize", fallback);
+      fallback();
+    }
+
+    // Reavalia em resize/rotação e inicializa estado
+    window.addEventListener("resize", updateBar);
+    requestAnimationFrame(updateBar);
+  }
+
+    /* =========================
+     BACK TO TOP BUTTON
+     ========================= */
+  const backToTop = document.getElementById("back-to-top");
+  if (backToTop) {
+    // Mostrar quando rolar além de 500px
+    const toggleBackToTop = () => {
+      if (window.scrollY > 500) {
+        backToTop.classList.add("is-visible");
       } else {
-        mobileCta.classList.add('is-visible');
+        backToTop.classList.remove("is-visible");
       }
-    },
-    { threshold: [0, 0.01, 0.1, 0.9, 1] }
-  );
-  io.observe(hero);
-} else if (hero && mobileCta) {
-  // Fallback: simple scroll check
-  const updateBar = () => {
-    if (!isMobile()) { mobileCta.classList.remove('is-visible'); return; }
-    const heroBottom = hero.getBoundingClientRect().bottom;
-    if (heroBottom <= 1) mobileCta.classList.add('is-visible');
-    else mobileCta.classList.remove('is-visible');
-  };
-  document.addEventListener('scroll', updateBar, { passive: true });
-  window.addEventListener('resize', updateBar);
-  updateBar();
-}
+    };
+
+    // Scroll suave para o topo
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.addEventListener("scroll", toggleBackToTop, { passive: true });
+    toggleBackToTop();
+  }
+
 });
