@@ -33,11 +33,11 @@
   <section class="hero">
     <div class="hero-content">
       <h1 class="hero-title">
-        <span class="word-play">Play</span><span class="word-this">this</span><br>
+        <span class="word-play">Play</span><span class="word-this">this</span>
         <span class="word-indie">Indie Game Festival</span>
       </h1>
       <p>An Táin Arts Centre, Dundalk – April 2026</p>
-      <a href="#about" class="btn">Buy Tickets</a>
+      <a id="open-tickets" type="button" class="btn">Buy Tickets</a>
     </div>
   </section>
 
@@ -128,6 +128,27 @@
     </div>
   </footer>
 
+  <<!-- Tickets Modal (custom) -->
+  <div id="tickets-modal" class="tickets-modal" aria-hidden="true" hidden>
+    <div class="tickets-backdrop" data-close-modal></div>
+
+    <div class="tickets-dialog" role="dialog" aria-modal="true" aria-labelledby="tickets-title">
+      <button class="tickets-close" type="button" aria-label="Close" title="Close" data-close-modal>×</button>
+      <h3 id="tickets-title" class="tickets-title">Buy Tickets</h3>
+
+      <!-- === Eventbrite INLINE embed container === -->
+      <div id="eventbrite-widget-container-1810172728359">
+        <!-- Fallback enquanto carrega -->
+        <div class="eb-fallback">
+          <p>Carregando checkout… Se demorar, <a href="https://www.eventbrite.ie/e/playthis-indie-game-festival-tickets-1810172728359" target="_blank" rel="noopener noreferrer">clique aqui</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carregue o script do Eventbrite uma única vez e ANTES do seu scripts.js -->
+  <script src="https://www.eventbrite.ie/static/widgets/eb_widgets.js"></script>
   <script src="scripts.js" defer></script>
+
 </body>
 </html>
