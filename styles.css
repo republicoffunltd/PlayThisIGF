@@ -855,6 +855,7 @@ section[id], main[id], header[id], footer[id] {
   .expect-grid { grid-template-columns: repeat(2, 1fr); }
   .collab-grid { grid-template-columns: repeat(1, 1fr); }
   .cta-wrap { grid-template-columns: 1fr; }
+  .cta-left { text-align: center; }
   .gform-embed iframe { height: 640px; } /* a bit taller on mobile */
 }
 
@@ -942,7 +943,7 @@ section[id], main[id], header[id], footer[id] {
 
   .collab-grid { grid-template-columns: 1fr; }
 
-  .cta-left { text-align: center; }
+  
 
   html { scroll-padding-top: 128px; }
 }
