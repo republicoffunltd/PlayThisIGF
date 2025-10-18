@@ -692,6 +692,16 @@ footer a:hover { color: #e474ad; }
   transform: scale(1.1);
 }
 
+/* 1) Dá um offset automático para qualquer rolagem/anchor */
+html {
+  scroll-padding-top: var(--nav-height);   /* funciona em anchors e scrollIntoView */
+  scroll-behavior: smooth;                 /* rolagem suave nativa */
+}
+
+/* 2) Seções com ID também respeitam a margem ao serem “alvos” */
+section[id], main[id], header[id], footer[id] {
+  scroll-margin-top: var(--nav-height);
+}
 
 /* =========================
    Back to Top Button
@@ -860,20 +870,31 @@ footer a:hover { color: #e474ad; }
     justify-content: center;
   }
 
+  /* ▼ Transição suave no painel mobile ▼ */
   .nav-links {
-    display: none;            /* hidden by default on mobile */
+    /* layout/posição mantidos */
     position: absolute;
-    top: 100%;                /* below the navbar */
+    top: 100%;
     left: 0;
     right: 0;
-    background: #00c9a7;      /* match navbar */
+    background: #00c9a7;      /* mesma cor já usada */
     padding: 0.75rem 1rem;
     flex-direction: column;
     gap: 0.25rem;
     z-index: 1000;
+
+    /* animação */
+    display: flex;            /* mantém o fluxo dos itens */
+    max-height: 0;            /* fechado */
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.15s ease;
   }
 
-  .nav-links.open { display: flex; }
+  .nav-links.open {
+    max-height: 320px;        /* espaço suficiente para todos os links */
+    opacity: 1;
+  }
 
   .nav-links a {
     display: block;
@@ -882,49 +903,34 @@ footer a:hover { color: #e474ad; }
     color: #fff;
   }
 
-  .nav-cta {
-    display: none !important;
-  }
+  .nav-cta { display: none !important; }
 
-  .mobile-cta-bar {
-    top: 128px; /* stick just below the fixed navbar */
-  }
+  .mobile-cta-bar { top: 128px; }
 
   .hero {
     background-image: url('images/banner_mobile.jpg') !important;
-
-    height: 80vh; /* ou 80vh se preferir menos alto */
+    height: 80vh;
   }
 
   .hero h1 { line-height: 4rem; }
 
-
-  .hero .word-play {
-    font-size: 6rem;
-    -webkit-text-stroke: 4px #2e3192;
-  }
-
-  .hero .word-this {
-    font-size: 6rem;
-    -webkit-text-stroke: 4px #2e3192;
-  }
-
-  .hero .word-indie {
-   font-size: 3rem;
-   -webkit-text-stroke: 1px #000;
-   line-height: 1rem !important; 
-  }
+  .hero .word-play { font-size: 6rem; -webkit-text-stroke: 4px #2e3192; }
+  .hero .word-this { font-size: 6rem; -webkit-text-stroke: 4px #2e3192; }
+  .hero .word-indie { font-size: 3rem; -webkit-text-stroke: 1px #000; line-height: 1rem !important; }
 
   .expect-grid { grid-template-columns: 1fr; }
-  .expect-card { height: 175px; }\
+  .expect-card { height: 175px; }
 
   .collab-grid { grid-template-columns: 1fr; }
 
-  .cta-left
-  {
-    text-align: center;
-  }
+  .cta-left { text-align: center; }
 
+  html { scroll-padding-top: 128px; }
+}
+
+/* Acessibilidade: reduz animações se o usuário preferir */
+@media (prefers-reduced-motion: reduce) {
+  .nav-links { transition: none; }
 }
 
 /* --- Mobile footer stacking --- */
